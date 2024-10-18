@@ -12,28 +12,10 @@ function main() {
     trainer = confirm("Trainer mode");
     playNim();
     again = confirm("Again?");
-    if (again == true) {
-        main();
-    }
-    alert("Thank's you for playing");
+    if (again == true) main();
+    
 }
 
-/* playNim */
-function playNim() {
-    count = 0;
-    while ( count < 20 ) {
-        userTurn();
-        if ( count < 20 ) {
-            CPUTurn();
-        }
-        else alert("U lose");
-        userTurn(); 
-        if ( count < 20 ) {
-            CPUTurn();
-        }
-        else if ( count = 20 ) alert("U win");
-    }
-}
 
  /** 
  * playNim runs Nim, player first and then computer, and says who wins * 
@@ -42,11 +24,21 @@ function playNim() {
  * @return Description of the return value. 
  */
 
-function userTurn() {
-   /* count += 3; */
-    count = prompt("say namber")
-    alert("You counted 3. Count is now " + count);
-} 
+/* playNim */
+function playNim() {
+    count = 0;
+    while ( count < 21 ) {
+        userTurn();
+        if ( count > 20 ) {
+           alert("U lost!");
+        }
+        else {
+            CPUTurn();
+            if ( count > 20 ) alert("U won");
+        }
+       
+    }
+}
 
  /** 
  * userTurn gets a turn the user and checks if it is cheating with recursion * 
@@ -55,10 +47,25 @@ function userTurn() {
  * @return Description of the return value. 
  */
 
-function CPUTurn() {
-    count += 1;
-    alert("I counted 3. Count is now " + count);
-}
+function userTurn() {
+    // count += 3;
+    // count = prompt("say namber");
+    // alert("You counted 3. Count is now " + count);
+
+    let turn = parseInt(prompt("pick a number 1-3"));
+    turn = parseInt(turn);
+    if (turn < 1 || turn > 3) {
+        alert("bad turn");
+        userTurn();
+    }
+    else {
+        count += turn;
+        alert("Count is now " + count);
+    }
+
+} 
+
+
 
 /** 
  * CPUTurn gets a computer's turn without losing on purpose. Different * 
@@ -66,3 +73,14 @@ function CPUTurn() {
  * @param parameter2 Description of the second parameter. 
  * @return Description of the return value. 
  */
+
+function CPUTurn() {
+    // count += 3 ;
+    if (count == 17 ) turn = 3;
+    else if (count == 18 ) turn = 2;
+    else if (count > 18) turn = 1;
+    else if (trainer == true) turn = 4 - count % 4;
+    else turn = Math.floor(Math.random()*3)+1;
+    count += turn;
+    alert("I counted 3. Count is now " + count);
+}
